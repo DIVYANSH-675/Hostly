@@ -1,0 +1,129 @@
+{
+    "family": "hostly-web",
+    "networkMode": "awsvpc",
+    "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/ecsTaskExecutionRole",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "512",
+    "memory": "1024",
+    "containerDefinitions": [
+        {
+            "name": "web",
+            "image": "YOUR_ACCOUNT_ID.dkr.ecr.YOUR_REGION.amazonaws.com/hostly-web:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "AWS_SECURITY_GROUP_ID",
+                    "value": "sg-xxxxxxxxxxxxxxxxx"
+                },
+                {
+                    "name": "AWS_REGION",
+                    "value": "us-east-1"
+                },
+                {
+                    "name": "NEXTAUTH_SECRET",
+                    "value": "YOUR_NEXTAUTH_SECRET"
+                },
+                {
+                    "name": "AWS_SECRET_ACCESS_KEY",
+                    "value": "YOUR_AWS_SECRET_ACCESS_KEY"
+                },
+                {
+                    "name": "GITHUB_WEBHOOK_SECRET",
+                    "value": "YOUR_GITHUB_WEBHOOK_SECRET"
+                },
+                {
+                    "name": "GITHUB_APP_ID",
+                    "value": "YOUR_GITHUB_APP_ID"
+                },
+                {
+                    "name": "GITHUB_APP_URL",
+                    "value": "https://github.com/apps/your-github-app"
+                },
+                {
+                    "name": "BUILDER_CALLBACK_URL",
+                    "value": "http://YOUR_WEB_IP/api/builder/callback"
+                },
+                {
+                    "name": "AWS_ECS_CLUSTER",
+                    "value": "hostly-builder2"
+                },
+                {
+                    "name": "AWS_TASK_DEFINITION",
+                    "value": "hostly-builder"
+                },
+                {
+                    "name": "GITHUB_APP_SLUG",
+                    "value": "your-github-app-slug"
+                },
+                {
+                    "name": "GITHUB_ID",
+                    "value": "YOUR_GITHUB_OAUTH_CLIENT_ID"
+                },
+                {
+                    "name": "GITHUB_SECRET",
+                    "value": "YOUR_GITHUB_OAUTH_CLIENT_SECRET"
+                },
+                {
+                    "name": "AWS_ACCESS_KEY_ID",
+                    "value": "YOUR_AWS_ACCESS_KEY_ID"
+                },
+                {
+                    "name": "AWS_SUBNET_ID",
+                    "value": "subnet-xxxxxxxxxxxxxxxxx"
+                },
+                {
+                    "name": "GITHUB_PRIVATE_KEY",
+                    "value": "BASE64_ENCODED_PRIVATE_KEY"
+                },
+                {
+                    "name": "AUTH_TRUST_HOST",
+                    "value": "true"
+                },
+                {
+                    "name": "NEXTAUTH_URL",
+                    "value": "http://YOUR_DOMAIN"
+                },
+                {
+                    "name": "BUILD_BUCKET",
+                    "value": "your-s3-bucket"
+                },
+                {
+                    "name": "DEPLOY_DOMAIN",
+                    "value": "your-domain.com"
+                },
+                {
+                    "name": "DATABASE_URL",
+                    "value": "postgresql://user:pass@host/db"
+                },
+                {
+                    "name": "REDIS_URL",
+                    "value": "rediss://default:token@redis.upstash.io:6379"
+                },
+                {
+                    "name": "PORT",
+                    "value": "80"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/hostly-web",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs/web"
+                }
+            }
+        }
+    ]
+}
